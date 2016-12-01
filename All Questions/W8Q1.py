@@ -21,8 +21,8 @@ class Node():
     def addVisit(self):
         self.visited = True
 
-    def __gt__(self, other):                        # rich comparison method for x > y used in heap
-        return(self.distance > other.distance)
+    def __gt__(self, y):                        # rich comparison method for x > y used in heap
+        return(self.distance > y.distance)
         
 class graph():
     def __init__(self):
