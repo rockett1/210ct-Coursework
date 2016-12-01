@@ -12,17 +12,8 @@ class Node():
     def addAdjacent(self, edge, weight = 0):
         self.adjacent[edge] = weight
 
-    def returnAdjacents(self):
-        return(self.adjacent.keys())
-
-    def returnWeight(self, edge):
-        return(self.adjacent[edge])
-
     def addDistance(self, dist):
         self.distance = dist
-
-    def returnDistance(self):
-        return(self.distance)
 
     def addPrev(self, prev):
         self.previous = prev
@@ -31,7 +22,7 @@ class Node():
         self.visited = True
 
     def __gt__(self, other): # rich comparison method for x > y used in heap
-        return(self.returnDistance() > other.returnDistance())
+        return(self.distance > other.distance)
         
 class graph():
     def __init__(self):
@@ -59,7 +50,7 @@ class graph():
 def dijkstra(graph, start):
     start.addDistance(0)        #sets start node to have 0 distance
 
-    unvisitedQueue = [(n.returnDistance(),n) for n in graph]    #put distance and node into queue
+    unvisitedQueue = [(n.distance,n) for n in graph]    #put distance and node into queue
     heapq.heapify(unvisitedQueue)   #convert into heap
 
     while (len(unvisitedQueue) != 0):
@@ -68,16 +59,16 @@ def dijkstra(graph, start):
         current.addVisit()  #adds node to visited
 
         for next in current.adjacent:
-            newDistance = current.returnDistance() + current.returnWeight(next) #calculates distance travelled
+            newDistance = current.distance + current.adjacent[next] #calculates distance travelled
 
-            if newDistance < next.returnDistance(): # checks if newpath is shorter than old path stored
+            if newDistance < next.distance: # checks if newpath is shorter than old path stored
                 next.addDistance(newDistance)
                 next.addPrev(current)
                 print(newDistance)
             #after visiting node
             while len(unvisitedQueue) != 0:
                 heapq.heappop(unvisitedQueue) #pop all nodes
-            unvisitedQueue = [(v.returnDistance(),v) for v in graph if not v.visited]   #recalculates unvisited
+            unvisitedQueue = [(v.distance,v) for v in graph if not v.visited]   #recalculates unvisited
             heapq.heapify(unvisitedQueue) #rebuild unvisitedQueue
 
 def compilePath(v, path):  #adds the shortest way to get to target, returns list in order traversed
