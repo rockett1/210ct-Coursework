@@ -21,13 +21,14 @@ class Node():
     def addVisit(self):
         self.visited = True
 
-    def __gt__(self, y):                        #rich comparison method for x > y used in heap
+    def __gt__(self, other):                        #rich comparison method for x > y used in heap
         self.distance > other.distance          #allows storing heap of objects
         
 class graph():
     def __init__(self):
         self.nodeDict = {} 
         self.dictlen = len(self.nodeDict.keys())
+
 
     def __iter__(self):
         return iter(self.nodeDict.values())
