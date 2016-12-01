@@ -1,0 +1,1 @@
+Breadth first search['A', 'B', 'S', 'C', 'G', 'D', 'E', 'F', 'H']Depth first search['A', 'S', 'G', 'H', 'E', 'C', 'F', 'D', 'B']
