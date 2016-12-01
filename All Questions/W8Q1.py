@@ -5,9 +5,9 @@ class Node():
     def __init__(self, node):
         self.id = node
         self.adjacent = {}
-        self.distance = sys.maxsize #sets all distances to max size
-        self.visited = False    #sets all nodes to not visited
-        self.previous = None    #placeholder for previous
+        self.distance = sys.maxsize                 #sets all distances to max size
+        self.visited = False                        #sets all nodes to not visited
+        self.previous = None                        #placeholder for previous
         
     def addAdjacent(self, edge, weight = 0):
         self.adjacent[edge] = weight
@@ -21,7 +21,7 @@ class Node():
     def addVisit(self):
         self.visited = True
 
-    def __gt__(self, other): # rich comparison method for x > y used in heap
+    def __gt__(self, other):                        # rich comparison method for x > y used in heap
         return(self.distance > other.distance)
         
 class graph():
@@ -48,38 +48,34 @@ class graph():
         self.nodeDict[edge2].addAdjacent(self.nodeDict[edge1], weight)
 
 def dijkstra(graph, start):
-    start.addDistance(0)        #sets start node to have 0 distance
+    start.addDistance(0)                            #sets start node to have 0 distance
 
-    unvisitedQueue = [(n.distance,n) for n in graph]    #put distance and node into queue
-    heapq.heapify(unvisitedQueue)   #convert into heap
+    unvisitedQueue = [(n.distance,n) for n in graph]#put distance and node into queue
+    heapq.heapify(unvisitedQueue)                   #convert into heap
 
     while (len(unvisitedQueue) != 0):
-        uv = heapq.heappop(unvisitedQueue)  #pop lowest weight node
+        uv = heapq.heappop(unvisitedQueue)          #pop lowest weight node
         current = uv[1]
-        current.addVisit()  #adds node to visited
+        current.addVisit()                          #adds node to visited
 
         for next in current.adjacent:
             newDistance = current.distance + current.adjacent[next] #calculates distance travelled
 
-            if newDistance < next.distance: # checks if newpath is shorter than old path stored
+            if newDistance < next.distance:                         # checks if newpath is shorter than old path stored
                 next.addDistance(newDistance)
                 next.addPrev(current)
                 print(newDistance)
             #after visiting node
             while len(unvisitedQueue) != 0:
-                heapq.heappop(unvisitedQueue) #pop all nodes
+                heapq.heappop(unvisitedQueue)                       #pop all nodes
             unvisitedQueue = [(v.distance,v) for v in graph if not v.visited]   #recalculates unvisited
-            heapq.heapify(unvisitedQueue) #rebuild unvisitedQueue
+            heapq.heapify(unvisitedQueue)                           #rebuild unvisitedQueue
 
-def compilePath(v, path):  #adds the shortest way to get to target, returns list in order traversed
+def compilePath(v, path):                           #shortest way to get to target, returns list in order traversed
     if v.previous != None:
         path.append(v.previous.id)
         compilePath(v.previous, path)
     return(path[::-1])
-
-
-
-        
 
 gr = graph()
 gr.addNode("A")
@@ -108,10 +104,3 @@ dijkstra(gr,gr.nodeDict["A"])
 target = gr.returnNode("E")
 path = [target.id]
 print("shortest path from start to target: " + str(compilePath(target, path)))
-
-
-
-
-
-
-
