@@ -22,7 +22,7 @@ class Node():
         self.visited = True
 
     def __gt__(self, other):                        #rich comparison method for x > y used in heap
-        self.distance > other.distance          #allows storing heap of objects
+        self.distance > other.distance          #allows objects in heap
         
 class graph():
     def __init__(self):
